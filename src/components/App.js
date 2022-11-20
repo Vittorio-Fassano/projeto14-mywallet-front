@@ -5,8 +5,9 @@ import GlobalStyle from '../GlobalStyle/GlobalStyle'; //layout settings used for
 
 import UserContext from '../contexts/userContext'; //transfer information between components
 
+import SignIn  from './ApplicationAccess/Sign-In'; //login
 import SignUp  from './ApplicationAccess/Sign-Up'; //register
-import SignIn  from './ApplicationAccess/Sign-In';
+
 
 
 function App() {
@@ -19,8 +20,8 @@ function App() {
                     <UserContext.Provider value = {{userInformations, setUserInformations}}>
                         <BrowserRouter>
                             <Routes>
+                                <Route path='/' element={<SignIn />}/>
                                 <Route path='/sign-up' element={<SignUp />}/>
-                                <Route path='/sign-in' element={<SignIn />}/>
                             </Routes>
                         </BrowserRouter>
                     </UserContext.Provider>

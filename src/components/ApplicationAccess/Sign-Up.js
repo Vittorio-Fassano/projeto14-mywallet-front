@@ -17,17 +17,18 @@ export default function SignUp() {
         /* (e) is a synthetic event to prevent form default action of the borwser: If attributes (action and method )
            are not provided, the default URL is the current URL the form was submitted on, and the method is get 
         */
-        const URLsignup = "https://mywallet-api-6vbn.onrender.com/sign-up" //back deploy link
+        const URLsignup = "https://mywallet-api-ggi9.onrender.com/sign-up" //back deploy link
         const body = { name, email, password, confirmedPassword };
 
         try {
             await axios.post(URLsignup, body);
-            navigate("/sign-in")
+            navigate("/sign-in")//if the registration is successful, go to the transactions screen
+            console.log("cadastrou")
         } catch (err) {
             console.log(err);
             alert("error registering user");
         }
-    } //end of function input
+    } //end of function newUser
 
     //inputs
     const renderInputs = inputs();
@@ -45,26 +46,28 @@ export default function SignUp() {
                     onChange={e => setEmail(e.target.value)}
                 />
                 <input
-                    type='text'
+                    type='password'
                     placeholder='Senha'
                     onChange={e => setPassword(e.target.value)}
                 />
                 <input
-                    type='text'
+                    type='password'
                     placeholder='Confirmar senha'
                     onChange={e => setConfirmedPassword(e.target.value)}
                 />
+                <button type='submit'>Cadastrar</button>
             </form>
         )
     }
-
 
     //render on screen
     return (
         <ContainerSignUp>
             <h1>MyWallet</h1>
-            <ContainerInputs>{renderInputs}</ContainerInputs>
-            <Link to="sign-in">
+            <ContainerInputs>
+                {renderInputs}
+            </ContainerInputs>
+            <Link to="/sign-in"  style={{ textDecoration: 'none'}}>
                 <p>Já tem uma conta? Entre agora!</p>
             </Link>
         </ContainerSignUp>
@@ -101,6 +104,7 @@ const ContainerSignUp = styled.div `
         font-size:20px;
         font-weight: 700;
         cursor:pointer;
+        font-family: 'Raleway', sans-serif; 
     }
 
     p {
@@ -128,6 +132,7 @@ const ContainerInputs = styled.div `
         margin-left:25px;
         padding-left:15px;
         padding-top:5px;
+        font-size: 20px;
     }
 
     input:focus {
