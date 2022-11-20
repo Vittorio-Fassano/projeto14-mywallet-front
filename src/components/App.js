@@ -1,4 +1,4 @@
-import {Route, Routes, BrowserRouter} from 'react-router-dom';
+import {Route, Routes, BrowserRouter, Router} from 'react-router-dom';
 import { useState } from 'react';
 
 import GlobalStyle from '../GlobalStyle/GlobalStyle'; //layout settings used for all screens
@@ -7,12 +7,16 @@ import UserContext from '../contexts/userContext'; //transfer information betwee
 function App() {
 
     return (
-        <>
-            <GlobalStyle/>
-
-        </>
-
-
+            <>
+                <GlobalStyle />
+                <UserContext.Provider value = {conxtextValue}>
+                    <BrowserRouter>
+                    <Routes>
+                        <Route path='/sign-up' element={<SignUp />}/>
+                    </Routes>
+                    </BrowserRouter>
+                </UserContext.Provider>
+            </>
         )
 }
 
