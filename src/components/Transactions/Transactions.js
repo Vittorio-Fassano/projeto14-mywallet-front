@@ -1,4 +1,4 @@
-import { useState,useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ import FooterTransaction from './FooterTransactions';
 
 export default function Transactions() {
     const [transactions, setTransactions] = useState([])
-    const {userInformations, userName} = useContext(UserContext);
+    const { userInformations, userName } = useContext(UserContext);
     console.log(userInformations);
 
     useEffect(() => {
@@ -29,9 +29,9 @@ export default function Transactions() {
             alert("error accessing transactions");
         });
     }, []);
-    
-    
-    
+
+
+
     /*useEffect(() => { //token
         async function findUser() {
             try {
@@ -46,7 +46,38 @@ export default function Transactions() {
         findUser();
     }, [] );  /*the useEffect is for the request to the axios happen only once "[]", 
                 only on the first rendering, avoiding an infinite loop, 
-                in this case, activate the token only once per page*/ 
+                in this case, activate the token only once per page*/
+
+
+    function Soma() {
+        const colorEnter = '#03AC00';
+        const colorExit = '#C70000'
+
+        let total = 0;
+
+        transactions.forEach((transaction) => {
+            if (transaction.type === "new entry") {
+                total += parseInt(transaction.value);
+            } else {
+                total -= parseInt(transaction.value);
+            }
+
+        });
+
+        console.log(total)
+
+        return (
+            <ContainerSaldo>
+                <SaldoP>
+                    {`SALDO`}
+                </SaldoP>
+                <h3 style={total >= 0 ? {color: `${colorEnter}`} : {color: `${colorExit}`}}>
+                    {total}
+                </h3>
+            </ContainerSaldo>
+        )
+    }
+
 
     return (
         <ContainerContent>
@@ -59,7 +90,7 @@ export default function Transactions() {
                     transactions.length > 0 ?
 
                         <>
-                       {transactions.map(transaction => <UserTransactions info={transaction} key={transactions.id} />)}
+                            {transactions.map(transaction => <UserTransactions info={transaction} key={transactions.id} />)}
                         </>
 
                         :
@@ -67,6 +98,7 @@ export default function Transactions() {
                             <p>Não há registros de <br /> entrada ou saída</p>
                         </ContainerEmpty>
                 }
+                <Soma />
             </ContainerMain>
             <FooterTransaction />
         </ContainerContent>
@@ -89,6 +121,30 @@ function UserTransactions(props) {
     );
 }
 
+
+const SaldoP = styled.p`
+    position: absolute;
+    bottom: 0;
+    margin-left: 12px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 23px;
+    color: #000000;
+
+`
+const ContainerSaldo = styled.div`
+    position: absolute;
+    bottom: 0;
+    border-radius: 5px 5px 0px 0px;
+
+    h3{
+        margin-bottom: 6px; 
+        margin-left: 230px;
+        font-size: 18px;
+    }
+`
 const ContainerTransactions = styled.div`
     display: flex;
     line-height: 23px;
@@ -158,11 +214,12 @@ const Header = styled.div`
 `;
 
 const ContainerMain = styled.div`
+    position: relative;
     width: 326px;
     height: 420px;
     overflow-y: scroll;
     background: #FFFFFF;
-    border-radius: 5px 5px 0px 0px;
+    border-radius: 5px 5px 5px 5px;
 `;
 
 const ContainerEmpty = styled.div`
@@ -176,3 +233,4 @@ const ContainerEmpty = styled.div`
     color: #868686;
     margin-top: 200px;
 `;
+
