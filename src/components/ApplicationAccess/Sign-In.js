@@ -4,33 +4,43 @@ import styled from 'styled-components';
 import axios from 'axios';
 import UserContext from '../../contexts/userContext';
 
-
-
 export default function SignIn() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const { setUserInformations, userInformations } = useContext(UserContext); //get a state through the context
+    const { setUserInformations, setUserName} = useContext(UserContext); //get a state through the context
+    const [infosSignIn, setInfosSignIn] = useState({ email: '', password: '' });
     const navigate = useNavigate();
-    console.log(userInformations)
 
-    async function newLogin(e) {
+    const modelSignIn = {
+        email: infosSignIn.email,
+        password: infosSignIn.password
+    }
+
+    const URLsignin = "https://mywallet-api-ggi9.onrender.com" //back deploy link
+
+    function newLogin(e) {
         e.preventDefault();
-        const URLsignin = "https://mywallet-api-ggi9.onrender.com" //back deploy link
-        const body = { email, password };
-        console.log(body);
 
-        //const promise = axios.post(URLsignin, body);
-        try {
-            const {data} = await axios.post(URLsignin, body);
-            console.log(data)
-            setUserInformations(data);
-            console.log(userInformations)
-            navigate("/transactions")
-        } catch (err) {
+        const promise = axios.post(URLsignin, modelSignIn)
+        promise.then((response) => {
+            setUserName(response.data.name);
+            console.log(setUserName);
+
+            setUserInformations(response.data.token);
+            console.log(setUserInformations);
+            
+            const user = JSON.stringify(response.data.token);
+            localStorage.setItem('token', user)
+
+            const userName = JSON.stringify(response.data.name);
+            localStorage.setItem('name', userName)
+
+
+            navigate("/transactions");
+        })
+        promise.catch(err => {
             console.log(err);
-            alert("error registering user");
-        }
-    }//end of function newLogin
+            alert("error login");
+        })
+    }
 
     //inputs
     const renderInputs = inputs();
@@ -39,13 +49,15 @@ export default function SignIn() {
             <form onSubmit={newLogin}>
                 <input
                     type='text'
-                    placeholder='E-mail'
-                    onChange={e => setEmail(e.target.value)}
+                    placeholder='email'
+                    value={infosSignIn.email}
+                    onChange={e => setInfosSignIn({ ...infosSignIn, email: e.target.value })}
                 />
                 <input
                     type='password'
-                    placeholder='Confirmar senha'
-                    onChange={e => setPassword(e.target.value)}
+                    placeholder='senha'
+                    value={infosSignIn.senha}
+                    onChange={e => setInfosSignIn({ ...infosSignIn, password: e.target.value })}
                 />
                 <button type='submit'>Entrar</button>
             </form>

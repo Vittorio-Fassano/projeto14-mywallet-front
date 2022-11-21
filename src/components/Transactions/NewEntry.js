@@ -7,26 +7,31 @@ import UserContext from '../../contexts/userContext';
 export default function NewEntry() {
     const [value, setValue] = useState("");
     const [description, setDescription] = useState("");
+
     const navigate = useNavigate();
     const { userInformations } = useContext(UserContext);
+    
 
     async function Entry(e) {
         e.preventDefault();
 
-        const headers = { //token
-            headers: { Authorization: `Bearer ${userInformations.token}` }
-        };
-
-        const body = {
+        const modelNewEntry = {
             description,
-            type: "new entry",
+            type: "new entry", //how is it in the backend
             value,
         };
+
+        const headers = { //token
+            headers: { Authorization: `Bearer ${userInformations}` }
+        };
+
+        console.log("token", userInformations)
+        console.log(modelNewEntry);
 
         const URLnewentry = "https://mywallet-api-ggi9.onrender.com/transactions"
 
         try {
-            await axios.post(URLnewentry, headers, body);
+            await axios.post(URLnewentry, modelNewEntry, headers);
             alert("successful transaction");
             navigate("/transactions");
 

@@ -6,53 +6,56 @@ import axios from 'axios';
 export default function SignUp() {
     const navigate = useNavigate();
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmedPassword, setConfirmedPassword] = useState("");
+    const [infosRegister, setInfosRegister] = useState({  name: "", email: "", password: "", confirmedPassword: "", });
 
-    async function newUser(e) {
+    const modelSignUp = {
+        name: infosRegister.name,
+        email: infosRegister.email,
+        password: infosRegister.password,
+        confirmedPassword: infosRegister.confirmedPassword
+    }
+
+    const URL = 'https://mywallet-api-ggi9.onrender.com/sign-up';
+
+    function Register(e) {
         e.preventDefault();
-        /* (e) is a synthetic event to prevent form default action of the borwser: If attributes (action and method )
-           are not provided, the default URL is the current URL the form was submitted on, and the method is get 
-        */
-        const URLsignup = "https://mywallet-api-ggi9.onrender.com/sign-up" //back deploy link
-        const body = { name, email, password, confirmedPassword };
+        const promise = axios.post(URL, modelSignUp);
 
-        try {
-            await axios.post(URLsignup, body);
-            navigate("/")//if the registration is successful, go to the transactions screen
-            console.log("cadastrou")
-        } catch (err) {
-            console.log(err);
-            alert("error registering user");
-        }
-    } //end of function newUser
+        promise.then((response) => {
+            setInfosRegister(response.data);
+            navigate('/');
+        });
 
+        promise.catch(error => {
+            console.log(error);
+            alert("error signup");
+        });
+    }
+        
     //inputs
-    const renderInputs = inputs();
-    function inputs() {
+    const renderInputs = Inputs();
+    function Inputs() {
         return (
-            <form onSubmit={newUser}>
+            <form onSubmit={Register}>
                 <input
                     type='text'
                     placeholder='Nome'
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => setInfosRegister({ ...infosRegister, name: e.target.value })}
                 />
                 <input
                     type='text'
                     placeholder='Email'
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={e => setInfosRegister({ ...infosRegister, email: e.target.value })}
                 />
                 <input
                     type='password'
                     placeholder='Senha'
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={e => setInfosRegister({ ...infosRegister, password: e.target.value })}
                 />
                 <input
                     type='password'
                     placeholder='Confirmar senha'
-                    onChange={e => setConfirmedPassword(e.target.value)}
+                    onChange={e => setInfosRegister({ ...infosRegister, confirmedPassword: e.target.value })}
                 />
                 <button type='submit'>Cadastrar</button>
             </form>
@@ -71,10 +74,9 @@ export default function SignUp() {
             </Link>
         </ContainerSignUp>
     );
-}
+} 
 
 //styles
-
 const ContainerSignUp = styled.div `
     width: 375px;
     margin: auto auto;

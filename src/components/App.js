@@ -1,5 +1,5 @@
 import {Route, Routes, BrowserRouter} from 'react-router-dom';
-import { useState, userContext} from 'react';
+import { useState, userContext, useEffect} from 'react';
 
 import GlobalStyle from '../GlobalStyle/GlobalStyle'; //layout settings used for all screens
 
@@ -14,9 +14,19 @@ import NewExit from './Transactions/NewExit';
 
 function App() {
     const tokenStorage = JSON.parse(localStorage.getItem('token'));
+    const nameStorage = JSON.parse(localStorage.getItem('name'));
     const [userInformations, setUserInformations] = useState(tokenStorage); // user data (this state is essencial for all project)
+    const [userName, setUserName] = useState(nameStorage);
 
-    const contextValue = { setUserInformations, userInformations };
+
+    useEffect(() => {
+        if (tokenStorage) {
+            setUserInformations(tokenStorage);
+            setUserName(nameStorage);
+        }
+    }, []);
+
+    const contextValue = { userInformations, setUserInformations, userName, setUserName};
     console.log(userInformations)
 
     return (

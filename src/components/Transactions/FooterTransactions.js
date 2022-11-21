@@ -4,10 +4,10 @@ import styled from "styled-components";
 export default function FooterTransaction() {
     return (
         <ContainerFooter>
-            <Link to="/transactions/new-exit" style={{ textDecoration: 'none' }}>
+            <Link to="/transactions/new-entry" style={{ textDecoration: 'none' }}>
                 <ContainerEntry>
                     <ion-icon name="remove-circle-outline"></ion-icon>
-                    <p>Nova <br /> Saída</p>
+                    <p>Nova <br /> entrada</p>
                 </ContainerEntry>
             </Link>
             <Link to="/transactions/new-exit" style={{ textDecoration: 'none' }}>

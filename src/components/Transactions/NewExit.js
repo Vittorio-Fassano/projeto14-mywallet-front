@@ -14,26 +14,25 @@ export default function NewExit() {
         e.preventDefault();
 
         const headers = { //token
-            headers: { Authorization: `Bearer ${userInformations.token}` }
+            headers: { Authorization: `Bearer ${userInformations}` }
         };
 
-        const body = {
+        const modelNewExit = {
             description,
-            type: "new exit",
+            type: "new exit", //how is it in the backend
             value,
         };
 
-        const URLnewentry = "https://mywallet-api-ggi9.onrender.com/transactions"
+        const URLnewexit = "https://mywallet-api-ggi9.onrender.com/transactions"
 
         try {
-            await axios.post(URLnewentry, headers, body);
+            await axios.post(URLnewexit, modelNewExit, headers);
             alert("successful transaction");
             navigate("/transactions");
 
         } catch (err) {
             console.log(err);
             alert("error when doing transaction");
-
         }
     }
 
