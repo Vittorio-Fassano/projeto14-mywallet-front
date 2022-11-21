@@ -24,23 +24,12 @@ export default function SignIn() {
             const {data} = await axios.post(URLsignin, body);
             console.log(data)
             setUserInformations(data);
-            console.log(userInformations);
-            navigate("/transactions");
+            console.log(userInformations)
+            navigate("/transactions")
         } catch (err) {
             console.log(err);
             alert("error registering user");
         }
-        
-        /*promise.then((response) => {
-            console.log(response)
-            setUserInformations(response.data);
-            console.log(userInformations)
-            navigate("/transactions")
-        })
-        promise.catch((err) => {
-            console.log(err);
-            alert("error when logging in");
-        })*/
     }//end of function newLogin
 
     //inputs

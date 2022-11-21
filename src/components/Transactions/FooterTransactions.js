@@ -1,26 +1,26 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function FooterTransaction () {
+export default function FooterTransaction() {
     return (
         <ContainerFooter>
-            <ContainerEntry>
-                    <Link to="/transactions/new-entry">
-                        <ion-icon name="add-circle-outline"></ion-icon>
-                    </Link>
-                    <p>Nova <br/> Entrada</p>
-            </ContainerEntry>
-            <ContainerExit>
-                    <Link to="/transactions/new-exit">
-                        <ion-icon name="remove-circle-outline"></ion-icon>
-                    </Link>
-                    <p>Nova <br/> Saída</p>
-            </ContainerExit>
+            <Link to="/transactions/new-exit" style={{ textDecoration: 'none' }}>
+                <ContainerEntry>
+                    <ion-icon name="remove-circle-outline"></ion-icon>
+                    <p>Nova <br /> Saída</p>
+                </ContainerEntry>
+            </Link>
+            <Link to="/transactions/new-exit" style={{ textDecoration: 'none' }}>
+                <ContainerExit>
+                    <ion-icon name="remove-circle-outline"></ion-icon>
+                    <p>Nova <br /> Saída</p>
+                </ContainerExit>
+            </Link>
         </ContainerFooter>
     )
 }
 
-const ContainerFooter = styled.div `
+const ContainerFooter = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
@@ -39,7 +39,7 @@ const ContainerFooter = styled.div `
     }
 `;
 
-const ContainerEntry = styled.div `
+const ContainerEntry = styled.div`
     width: 155px;
     height: 114px;
     left: 25px;
@@ -57,15 +57,16 @@ const ContainerEntry = styled.div `
     }
 
     p{
-        font-weight: 700;
-        font-size: 17px;
-        color: #FFFFFF;
-        margin-left:9.56px;
-        margin-top:70px;
+        position:absolute;
+        font-size:17px;
+        color:white;
+        margin-top: 70px;
+        margin-left: 9.56px;
+        cursor:pointer;
     }
 `;
 
-const ContainerExit = styled.div `
+const ContainerExit = styled.div`
     width: 156px;
     height: 114px;
     left: 195px;
@@ -83,10 +84,11 @@ const ContainerExit = styled.div `
     }
 
     p{
-        font-weight: 700;
-        font-size: 17px;
-        color: #FFFFFF;
-        margin-left:9.56px;
-        margin-top:70px;
+        position:absolute;
+        font-size:17px;
+        color:white;
+        margin-top: 70px;
+        margin-left: 9.56px;
+        cursor:pointer;
     }
 `;

@@ -13,8 +13,8 @@ import NewExit from './Transactions/NewExit';
 
 
 function App() {
-    
-    const [userInformations, setUserInformations] = useState({}); // user data (this state is essencial for all project)
+    const tokenStorage = JSON.parse(localStorage.getItem('token'));
+    const [userInformations, setUserInformations] = useState(tokenStorage); // user data (this state is essencial for all project)
 
     const contextValue = { setUserInformations, userInformations };
     console.log(userInformations)
