@@ -138,7 +138,7 @@ const ContainerSaldo = styled.div`
 
     h3{
         margin-bottom: 6px; 
-        margin-left: 245x;
+        margin-left: 245px;
         font-size: 17px;
     }
 `
