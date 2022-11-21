@@ -47,7 +47,7 @@ function App() {
         )
 }
 
+
 export default App;
 
-//<Route path='/transactions/entry' element={<NewTransaction />}/>
-//<Route path='/transactions/exit' element={<NewTransaction />}/>
+//FINAL VERSION 1.0
