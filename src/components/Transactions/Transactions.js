@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import UserContext from '../../contexts/userContext';
-import FooterTransaciton from './FooterTransactions';
+import FooterTransaction from './FooterTransactions';
 
 
 export default function Transactions() {
@@ -12,7 +12,8 @@ export default function Transactions() {
     const {userInformations} = useContext(UserContext);
     const URLtransactions = "https://mywallet-api-ggi9.onrender.com/transactions";
     console.log(userInformations);
-    useEffect(() => {
+
+    useEffect(() => { //token
         async function findUser() {
             try {
                 const {data} = await axios.get(URLtransactions, 
@@ -45,7 +46,7 @@ export default function Transactions() {
                         </ContainerEmpty>
                 }
             </ContainerMain>
-            <FooterTransaciton />
+            <FooterTransaction />
         </ContainerContent>
 
     );

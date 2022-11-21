@@ -13,15 +13,25 @@ export default function SignIn() {
     const navigate = useNavigate();
     console.log(userInformations)
 
-    function newLogin(e) {
+    async function newLogin(e) {
         e.preventDefault();
-        const URLsignin = "https://mywallet-api-ggi9.onrender.com/" //back deploy link
+        const URLsignin = "https://mywallet-api-ggi9.onrender.com" //back deploy link
         const body = { email, password };
         console.log(body);
 
-
-        const promise = axios.post(URLsignin, body);
-        promise.then((response) => {
+        //const promise = axios.post(URLsignin, body);
+        try {
+            const {data} = await axios.post(URLsignin, body);
+            console.log(data)
+            setUserInformations(data);
+            console.log(userInformations);
+            navigate("/transactions");
+        } catch (err) {
+            console.log(err);
+            alert("error registering user");
+        }
+        
+        /*promise.then((response) => {
             console.log(response)
             setUserInformations(response.data);
             console.log(userInformations)
@@ -30,7 +40,7 @@ export default function SignIn() {
         promise.catch((err) => {
             console.log(err);
             alert("error when logging in");
-        })
+        })*/
     }//end of function newLogin
 
     //inputs

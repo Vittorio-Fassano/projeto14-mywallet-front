@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function FooterTransaciton () {
+export default function FooterTransaction () {
     return (
         <ContainerFooter>
             <ContainerEntry>
-                    <Link to="/transactions/entry">
+                    <Link to="/transactions/new-entry">
                         <ion-icon name="add-circle-outline"></ion-icon>
                     </Link>
                     <p>Nova <br/> Entrada</p>
             </ContainerEntry>
             <ContainerExit>
-                    <Link to="/transactions/exit">
+                    <Link to="/transactions/new-exit">
                         <ion-icon name="remove-circle-outline"></ion-icon>
                     </Link>
                     <p>Nova <br/> Saída</p>
