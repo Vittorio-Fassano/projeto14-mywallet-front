@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import {useNavigate } from 'react-router-dom';
 
 import UserContext from '../../contexts/userContext';
 import FooterTransaction from './FooterTransactions';
@@ -8,8 +9,10 @@ import FooterTransaction from './FooterTransactions';
 
 export default function Transactions() {
     const [transactions, setTransactions] = useState([])
-    const { userInformations, userName } = useContext(UserContext);
+    const { userInformations, userName, setUserInformations, setUserName } = useContext(UserContext);
     console.log(userInformations);
+    const navigate = useNavigate();
+    
 
     useEffect(() => {
         const config = {
@@ -30,23 +33,6 @@ export default function Transactions() {
         });
     }, []);
 
-
-
-    /*useEffect(() => { //token
-        async function findUser() {
-            try {
-                const {data} = await axios.get(URLtransactions, 
-                    { headers : {Authorization: `Bearer ${userInformations.token}`}}); //access the token that was generated when signing in
-                setTransactions(data);
-            } catch (err) {
-                console.log(err);
-                alert("error accessing transactions");
-            }
-        }
-        findUser();
-    }, [] );  /*the useEffect is for the request to the axios happen only once "[]", 
-                only on the first rendering, avoiding an infinite loop, 
-                in this case, activate the token only once per page*/
 
 
     function Soma() {
@@ -78,12 +64,23 @@ export default function Transactions() {
         )
     }
 
+    function logOut() {
+        if (window.confirm("Do you want to log out?")) {
+            window.localStorage.removeItem('token');
+            window.localStorage.clear('token');
+            window.localStorage.removeItem('name');
+            window.localStorage.clear('name');
+            setUserInformations(null);
+            setUserName(null);
+            navigate("/");
+        }
+    }
 
     return (
         <ContainerContent>
             <Header>
                 <h2>{`ola, ${userName}`}</h2>
-                <ion-icon name="exit-outline"></ion-icon>
+                <ion-icon name="exit-outline" onClick={() => logOut()}></ion-icon>
             </Header>
             <ContainerMain>
                 {
@@ -129,7 +126,7 @@ const SaldoP = styled.p`
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 700;
-    font-size: 17px;
+    font-size: 14px;
     line-height: 23px;
     color: #000000;
 
@@ -141,8 +138,8 @@ const ContainerSaldo = styled.div`
 
     h3{
         margin-bottom: 6px; 
-        margin-left: 230px;
-        font-size: 18px;
+        margin-left: 245x;
+        font-size: 17px;
     }
 `
 const ContainerTransactions = styled.div`
