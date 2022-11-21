@@ -11,7 +11,6 @@ export default function SignUp() {
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
 
-
     async function newUser(e) {
         e.preventDefault();
         /* (e) is a synthetic event to prevent form default action of the borwser: If attributes (action and method )
@@ -22,7 +21,7 @@ export default function SignUp() {
 
         try {
             await axios.post(URLsignup, body);
-            navigate("/sign-in")//if the registration is successful, go to the transactions screen
+            navigate("/")//if the registration is successful, go to the transactions screen
             console.log("cadastrou")
         } catch (err) {
             console.log(err);
@@ -67,7 +66,7 @@ export default function SignUp() {
             <ContainerInputs>
                 {renderInputs}
             </ContainerInputs>
-            <Link to="/sign-in"  style={{ textDecoration: 'none'}}>
+            <Link to="/"  style={{ textDecoration: 'none'}}>
                 <p>Já tem uma conta? Entre agora!</p>
             </Link>
         </ContainerSignUp>
@@ -117,6 +116,7 @@ const ContainerSignUp = styled.div `
         margin-top:32px;
         text-decoration: none;
         text-decoration-color: #8C11BE;
+        font-family: 'Raleway', sans-serif; 
     }
 `
 
@@ -144,5 +144,6 @@ const ContainerInputs = styled.div `
         font-weight: 300;
         font-size: 20px;
         color: #000000;
+        font-family: 'Raleway', sans-serif; 
     }
 `

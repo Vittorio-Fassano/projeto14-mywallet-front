@@ -6,25 +6,31 @@ import UserContext from '../../contexts/userContext';
 
 
 
-export default function SignIn () {
+export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {setUserInformations} = useContext(UserContext); //get a state through the context
+    const { setUserInformations, userInformations } = useContext(UserContext); //get a state through the context
     const navigate = useNavigate();
+    console.log(userInformations)
 
-    async function newLogin (e) {
+    function newLogin(e) {
         e.preventDefault();
-        const URLsignin = "https://mywallet-api-ggi9.onrender.com" //back deploy link
-        const body = { email, password};
+        const URLsignin = "https://mywallet-api-ggi9.onrender.com/" //back deploy link
+        const body = { email, password };
+        console.log(body);
 
-        try {
-            const {data} = await axios.post(URLsignin, body); //get the data that the post route sends through the body
-            setUserInformations(data);//insert this data in the "userInformations" state through "setUserInformations"
-            navigate("/sign-up") //if the registration is successful, go to the transactions screen
-        } catch (err) {
+
+        const promise = axios.post(URLsignin, body);
+        promise.then((response) => {
+            console.log(response)
+            setUserInformations(response.data);
+            console.log(userInformations)
+            navigate("/transactions")
+        })
+        promise.catch((err) => {
             console.log(err);
             alert("error when logging in");
-        }
+        })
     }//end of function newLogin
 
     //inputs
@@ -34,7 +40,7 @@ export default function SignIn () {
             <form onSubmit={newLogin}>
                 <input
                     type='text'
-                    placeholder='Email'
+                    placeholder='E-mail'
                     onChange={e => setEmail(e.target.value)}
                 />
                 <input
@@ -54,14 +60,14 @@ export default function SignIn () {
             <ContainerInputs>
                 {renderInputs}
             </ContainerInputs>
-            <Link to="/sign-up"  style={{ textDecoration: 'none'}}>
+            <Link to="/sign-up" style={{ textDecoration: 'none' }}>
                 <p>Primeira vez? Cadastre-se!</p>
             </Link>
         </ContainerSignIn>
     );
 };
 
-const ContainerSignIn = styled.div `
+const ContainerSignIn = styled.div`
     width: 375px;
     margin: auto auto;
     display:flex;
@@ -102,11 +108,11 @@ const ContainerSignIn = styled.div `
         margin-top:36px;
         text-decoration: none;
         text-decoration-color: #8C11BE;
+        font-family: 'Raleway', sans-serif; 
     }
 `
 
-const ContainerInputs = styled.div `
- 
+const ContainerInputs = styled.div`
  input{
         width:326px;
         height:56px;
@@ -116,6 +122,8 @@ const ContainerInputs = styled.div `
         margin-left:25px;
         padding-left:15px;
         padding-top:5px;
+        font-size: 20px;
+        font-family: 'Raleway', sans-serif; 
     }
     input:focus {
     box-shadow: 0 0 0 0;
@@ -125,5 +133,6 @@ const ContainerInputs = styled.div `
         font-weight: 300;
         font-size: 20px;
         color: #000000;
+        font-family: 'Raleway', sans-serif; 
     }
 `
